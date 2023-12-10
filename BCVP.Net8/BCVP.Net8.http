@@ -1,0 +1,6 @@
+@BCVP.Net8_HostAddress = http://localhost:5047
+
+GET {{BCVP.Net8_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
