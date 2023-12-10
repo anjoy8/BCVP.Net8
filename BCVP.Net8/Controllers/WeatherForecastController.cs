@@ -1,4 +1,5 @@
 using AutoMapper;
+using BCVP.Net8.IService;
 using BCVP.Net8.Model;
 using BCVP.Net8.Service;
 using Microsoft.AspNetCore.Mvc;
@@ -13,14 +14,14 @@ namespace BCVP.Net8.Controllers
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
-
         private readonly ILogger<WeatherForecastController> _logger;
-        private readonly IMapper _mapper;
+        private readonly IBaseServices<Role, RoleVo> _roleService;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, IMapper mapper)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger,
+            IBaseServices<Role, RoleVo> roleService)
         {
             _logger = logger;
-            _mapper = mapper;
+            _roleService = roleService;
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
@@ -30,8 +31,10 @@ namespace BCVP.Net8.Controllers
             //var userList = await userService.Query();
             //return userList;
 
-            var roleService = new BaseServices<Role, RoleVo>(_mapper);
-            var roleList = await roleService.Query();
+            //var roleService = new BaseServices<Role, RoleVo>(_mapper);
+            //var roleList = await roleService.Query();
+
+            var roleList = await _roleService.Query();
             return roleList;
 
         }
