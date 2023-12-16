@@ -1,7 +1,13 @@
 
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using BCVP.Net8.Extensions;
+using BCVP.Net8.Extensions.ServiceExtensions;
 using BCVP.Net8.IService;
 using BCVP.Net8.Repository;
 using BCVP.Net8.Service;
+using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace BCVP.Net8
 {
@@ -10,9 +16,18 @@ namespace BCVP.Net8
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            builder.Host
+                .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+                .ConfigureContainer<ContainerBuilder>(builder =>
+                {
+                    builder.RegisterModule<AutofacModuleRegister>();
+                    builder.RegisterModule<AutofacPropertityModuleReg>();
+                });
+
 
             // Add services to the container.
 
+            builder.Services.Replace(ServiceDescriptor.Transient<IControllerActivator, ServiceBasedControllerActivator>());
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -21,9 +36,9 @@ namespace BCVP.Net8
             builder.Services.AddAutoMapper(typeof(AutoMapperConfig));
             AutoMapperConfig.RegisterMappings();
 
-            builder.Services.AddScoped(typeof(IBaseRepository<>),typeof(BaseRepository<>));
-            builder.Services.AddScoped(typeof(IBaseServices<,>),typeof(BaseServices<,>));
 
+            //builder.Services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+            //builder.Services.AddTransient(typeof(IBaseServices<,>), typeof(BaseServices<,>));
 
             var app = builder.Build();
 

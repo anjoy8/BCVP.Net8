@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -8,11 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\BCVP.Net8.Service\BCVP.Net8.Service.csproj" />
+    <ProjectReference Include="..\BCVP.Net8.Extensions\BCVP.Net8.Extensions.csproj" />
   </ItemGroup>
 
 </Project>

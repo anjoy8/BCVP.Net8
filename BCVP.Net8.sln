@@ -3,17 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34309.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BCVP.Net8", "BCVP.Net8\BCVP.Net8.csproj", "{BD7EE4A9-7CC9-4C52-87E3-EBC3B42A404D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BCVP.Net8", "BCVP.Net8\BCVP.Net8.csproj", "{BD7EE4A9-7CC9-4C52-87E3-EBC3B42A404D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BCVP.Net8.Common", "BCVP.Net8.Common\BCVP.Net8.Common.csproj", "{C647151B-3E4C-443D-9497-F5FB87002787}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BCVP.Net8.Common", "BCVP.Net8.Common\BCVP.Net8.Common.csproj", "{C647151B-3E4C-443D-9497-F5FB87002787}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BCVP.Net8.Model", "BCVP.Net8.Model\BCVP.Net8.Model.csproj", "{2FC9F493-7E5A-45F6-A565-76A635F85D50}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BCVP.Net8.Model", "BCVP.Net8.Model\BCVP.Net8.Model.csproj", "{2FC9F493-7E5A-45F6-A565-76A635F85D50}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BCVP.Net8.Repository", "BCVP.Net8.Repository\BCVP.Net8.Repository.csproj", "{EB80B100-422B-4EBD-AF33-E6E9D9274827}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BCVP.Net8.Repository", "BCVP.Net8.Repository\BCVP.Net8.Repository.csproj", "{EB80B100-422B-4EBD-AF33-E6E9D9274827}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BCVP.Net8.IService", "BCVP.Net8.IService\BCVP.Net8.IService.csproj", "{B5A732F9-87CE-4C01-8790-E2BC8EF20F1F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BCVP.Net8.IService", "BCVP.Net8.IService\BCVP.Net8.IService.csproj", "{B5A732F9-87CE-4C01-8790-E2BC8EF20F1F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BCVP.Net8.Service", "BCVP.Net8.Service\BCVP.Net8.Service.csproj", "{3F02B7E4-5EC0-4B4E-BEEB-2C2D25AEA38D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BCVP.Net8.Service", "BCVP.Net8.Service\BCVP.Net8.Service.csproj", "{3F02B7E4-5EC0-4B4E-BEEB-2C2D25AEA38D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BCVP.Net8.Extensions", "BCVP.Net8.Extensions\BCVP.Net8.Extensions.csproj", "{174DD05F-6FA9-433F-B94F-B6466769979B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{3F02B7E4-5EC0-4B4E-BEEB-2C2D25AEA38D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F02B7E4-5EC0-4B4E-BEEB-2C2D25AEA38D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F02B7E4-5EC0-4B4E-BEEB-2C2D25AEA38D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{174DD05F-6FA9-433F-B94F-B6466769979B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{174DD05F-6FA9-433F-B94F-B6466769979B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{174DD05F-6FA9-433F-B94F-B6466769979B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{174DD05F-6FA9-433F-B94F-B6466769979B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
