@@ -4,6 +4,7 @@ using Autofac.Extensions.DependencyInjection;
 using BCVP.Net8.Common;
 using BCVP.Net8.Extensions;
 using BCVP.Net8.Extensions.ServiceExtensions;
+using BCVP.Net8.Common.Option.Core;
 using BCVP.Net8.IService;
 using BCVP.Net8.Repository;
 using BCVP.Net8.Service;
@@ -23,7 +24,12 @@ namespace BCVP.Net8
                 {
                     builder.RegisterModule<AutofacModuleRegister>();
                     builder.RegisterModule<AutofacPropertityModuleReg>();
-                });
+                })
+                .ConfigureAppConfiguration((hostingContext, config) =>
+                {
+                    hostingContext.Configuration.ConfigureApplication();
+                })
+                ;
 
 
             // Add services to the container.
@@ -39,7 +45,7 @@ namespace BCVP.Net8
 
             // ≈‰÷√
             builder.Services.AddSingleton(new AppSettings(builder.Configuration));
-
+            builder.Services.AddAllOptionRegister();
 
             var app = builder.Build();
 

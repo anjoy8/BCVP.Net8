@@ -1,9 +1,12 @@
 using AutoMapper;
 using BCVP.Net8.Common;
+using BCVP.Net8.Common.Option;
 using BCVP.Net8.IService;
 using BCVP.Net8.Model;
 using BCVP.Net8.Service;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 
 namespace BCVP.Net8.Controllers
 {
@@ -16,12 +19,16 @@ namespace BCVP.Net8.Controllers
         private readonly ILogger<WeatherForecastController> _logger;
         private readonly IBaseServices<Role, RoleVo> _roleService;
         private readonly IServiceScopeFactory _scopeFactory;
+        private readonly IOptions<RedisOptions> _redisOptions;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, IBaseServices<Role, RoleVo> roleService, IServiceScopeFactory scopeFactory)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger,
+            IBaseServices<Role, RoleVo> roleService, IServiceScopeFactory scopeFactory,
+            IOptions<RedisOptions> options)
         {
             _logger = logger;
             _roleService = roleService;
             _scopeFactory = scopeFactory;
+            _redisOptions = options;
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
@@ -56,6 +63,9 @@ namespace BCVP.Net8.Controllers
             var redisConnectionString = AppSettings.GetValue("Redis:ConnectionString");
             Console.WriteLine($"Enable: {redisEnable} ,  ConnectionString: {redisConnectionString}");
 
+
+            var redisOptions = _redisOptions.Value;
+            Console.WriteLine(JsonConvert.SerializeObject(redisOptions));
 
             Console.WriteLine("api request end...");
             return roleList;
