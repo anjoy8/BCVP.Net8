@@ -1,6 +1,7 @@
 
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using BCVP.Net8.Common;
 using BCVP.Net8.Extensions;
 using BCVP.Net8.Extensions.ServiceExtensions;
 using BCVP.Net8.IService;
@@ -36,9 +37,9 @@ namespace BCVP.Net8
             builder.Services.AddAutoMapper(typeof(AutoMapperConfig));
             AutoMapperConfig.RegisterMappings();
 
+            // ≈‰÷√
+            builder.Services.AddSingleton(new AppSettings(builder.Configuration));
 
-            //builder.Services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
-            //builder.Services.AddTransient(typeof(IBaseServices<,>), typeof(BaseServices<,>));
 
             var app = builder.Build();
 
