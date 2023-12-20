@@ -10,6 +10,7 @@ using BCVP.Net8.Repository;
 using BCVP.Net8.Service;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using BCVP.Net8.Common.Core;
 
 namespace BCVP.Net8
 {
@@ -31,7 +32,7 @@ namespace BCVP.Net8
                 })
                 ;
 
-
+            builder.ConfigureApplication();
             // Add services to the container.
 
             builder.Services.Replace(ServiceDescriptor.Transient<IControllerActivator, ServiceBasedControllerActivator>());
@@ -48,6 +49,8 @@ namespace BCVP.Net8
             builder.Services.AddAllOptionRegister();
 
             var app = builder.Build();
+            app.ConfigureApplication();
+            app.UseApplicationSetup();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
