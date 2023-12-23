@@ -48,6 +48,9 @@ namespace BCVP.Net8
             builder.Services.AddSingleton(new AppSettings(builder.Configuration));
             builder.Services.AddAllOptionRegister();
 
+            // »º´æ
+            builder.Services.AddCacheSetup();
+
             var app = builder.Build();
             app.ConfigureApplication();
             app.UseApplicationSetup();
