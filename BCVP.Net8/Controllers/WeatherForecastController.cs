@@ -26,7 +26,8 @@ namespace BCVP.Net8.Controllers
         private readonly IOptions<RedisOptions> _redisOptions;
 
         public WeatherForecastController(ILogger<WeatherForecastController> logger,
-            IBaseServices<Role, RoleVo> roleService, IServiceScopeFactory scopeFactory,
+            IBaseServices<Role, RoleVo> roleService,
+            IServiceScopeFactory scopeFactory,
             ICaching caching,
             IOptions<RedisOptions> options)
         {
@@ -64,7 +65,7 @@ namespace BCVP.Net8.Controllers
             //var roleList21 = await _dataStatisticService2.Query();
 
 
-            //var roleList = await _roleServiceObj.Query();
+            var roleList = await _roleServiceObj.Query();
             //var redisEnable = AppSettings.app(new string[] { "Redis", "Enable" });
             //var redisConnectionString = AppSettings.GetValue("Redis:ConnectionString");
             //Console.WriteLine($"Enable: {redisEnable} ,  ConnectionString: {redisConnectionString}");
@@ -77,22 +78,22 @@ namespace BCVP.Net8.Controllers
             //var roleList = await roleServiceObjNew.Query();
             //var redisOptions = App.GetOptions<RedisOptions>();
 
-            var cacheKey = "cache-key";
-            List<string> cacheKeys = await _caching.GetAllCacheKeysAsync();
-            await Console.Out.WriteLineAsync("È«²¿keys -->" + JsonConvert.SerializeObject(cacheKeys));
+            //var cacheKey = "cache-key";
+            //List<string> cacheKeys = await _caching.GetAllCacheKeysAsync();
+            //await Console.Out.WriteLineAsync("å…¨éƒ¨keys -->" + JsonConvert.SerializeObject(cacheKeys));
 
-            await Console.Out.WriteLineAsync("Ìí¼ÓÒ»¸ö»º´æ");
-            await _caching.SetStringAsync(cacheKey, "hi laozhang");
-            await Console.Out.WriteLineAsync("È«²¿keys -->" + JsonConvert.SerializeObject(await _caching.GetAllCacheKeysAsync()));
-            await Console.Out.WriteLineAsync("µ±Ç°keyÄÚÈÝ-->" + JsonConvert.SerializeObject(await _caching.GetStringAsync(cacheKey)));
+            //await Console.Out.WriteLineAsync("æ·»åŠ ä¸€ä¸ªç¼“å­˜");
+            //await _caching.SetStringAsync(cacheKey, "hi laozhang");
+            //await Console.Out.WriteLineAsync("å…¨éƒ¨keys -->" + JsonConvert.SerializeObject(await _caching.GetAllCacheKeysAsync()));
+            //await Console.Out.WriteLineAsync("å½“å‰keyå†…å®¹-->" + JsonConvert.SerializeObject(await _caching.GetStringAsync(cacheKey)));
 
-            await Console.Out.WriteLineAsync("É¾³ýkey");
-            await _caching.RemoveAsync(cacheKey);
-            await Console.Out.WriteLineAsync("È«²¿keys -->" + JsonConvert.SerializeObject(await _caching.GetAllCacheKeysAsync()));
+            //await Console.Out.WriteLineAsync("åˆ é™¤key");
+            //await _caching.RemoveAsync(cacheKey);
+            //await Console.Out.WriteLineAsync("å…¨éƒ¨keys -->" + JsonConvert.SerializeObject(await _caching.GetAllCacheKeysAsync()));
 
 
             Console.WriteLine("api request end...");
-            return "";
+            return roleList;
         }
     }
 }

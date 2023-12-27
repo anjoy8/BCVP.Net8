@@ -44,12 +44,15 @@ namespace BCVP.Net8
             builder.Services.AddAutoMapper(typeof(AutoMapperConfig));
             AutoMapperConfig.RegisterMappings();
 
-            // ≈‰÷√
+            // ÈÖçÁΩÆ
             builder.Services.AddSingleton(new AppSettings(builder.Configuration));
             builder.Services.AddAllOptionRegister();
 
-            // ª∫¥Ê
+            // ÁºìÂ≠ò
             builder.Services.AddCacheSetup();
+
+            // ORM
+            builder.Services.AddSqlsugarSetup();
 
             var app = builder.Build();
             app.ConfigureApplication();
