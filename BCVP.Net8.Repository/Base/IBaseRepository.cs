@@ -7,6 +7,7 @@ namespace BCVP.Net8.Repository
     {
         ISqlSugarClient Db { get; }
 
+        Task<long> Add(TEntity entity);
         Task<List<TEntity>> Query();
     }
 }

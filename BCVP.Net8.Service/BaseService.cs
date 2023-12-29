@@ -24,5 +24,15 @@ namespace BCVP.Net8.Service
             var llout = _mapper.Map<List<TVo>>(entities);
             return llout;
         }
+
+        /// <summary>
+        /// 写入实体数据
+        /// </summary>
+        /// <param name="entity">博文实体类</param>
+        /// <returns></returns>
+        public async Task<long> Add(TEntity entity)
+        {
+            return await _baseRepository.Add(entity);
+        }
     }
 }
