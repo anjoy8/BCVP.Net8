@@ -2,9 +2,9 @@
 
 namespace BCVP.Net8.IService
 {
-    public interface IBaseServices<TEntity, TVo> where TEntity : class
+    public interface IUserService
     {
-        Task<long> Add(TEntity entity);
-        Task<List<TVo>> Query();
+        Task<List<UserVo>> Query();
+        Task<bool> TestTranPropagation();
     }
 }

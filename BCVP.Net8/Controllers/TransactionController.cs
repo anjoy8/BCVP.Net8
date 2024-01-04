@@ -11,11 +11,13 @@ namespace BCVP.Net8.Controllers
     public class TransactionController : ControllerBase
     {
         private readonly IBaseServices<Role, RoleVo> _roleService;
+        private readonly IUserService _userService;
         private readonly IUnitOfWorkManage _unitOfWorkManage;
 
-        public TransactionController(IBaseServices<Role, RoleVo> roleService, IUnitOfWorkManage unitOfWorkManage)
+        public TransactionController(IBaseServices<Role, RoleVo> roleService,IUserService userService, IUnitOfWorkManage unitOfWorkManage)
         {
             _roleService = roleService;
+            _userService = userService;
             _unitOfWorkManage = unitOfWorkManage;
         }
 
@@ -62,7 +64,11 @@ namespace BCVP.Net8.Controllers
             return "ok";
         }
 
+        [HttpGet]
+        public async Task<object> TestTranPropagation()
+        {
+            return await _userService.TestTranPropagation();
+        }
 
-    
     }
 }

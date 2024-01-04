@@ -19,32 +19,32 @@ public class UnitOfWork : IDisposable
 
     public void Dispose()
     {
-        if (IsTran && !IsCommit)
+        if (this.IsTran && !this.IsCommit)
         {
             Logger.LogDebug("UnitOfWork RollbackTran");
-            Tenant.RollbackTran();
+            this.Tenant.RollbackTran();
         }
 
-        if (Db.Ado.Transaction != null || IsClose)
+        if (this.Db.Ado.Transaction != null || this.IsClose)
             return;
-        Db.Close();
+        this.Db.Close();
     }
 
     public bool Commit()
     {
-        if (IsTran && !IsCommit)
+        if (this.IsTran && !this.IsCommit)
         {
             Logger.LogDebug("UnitOfWork CommitTran");
-            Tenant.CommitTran();
-            IsCommit = true;
+            this.Tenant.CommitTran();
+            this.IsCommit = true;
         }
 
-        if (Db.Ado.Transaction == null && !IsClose)
+        if (this.Db.Ado.Transaction == null && !this.IsClose)
         {
-            Db.Close();
-            IsClose = true;
+            this.Db.Close();
+            this.IsClose = true;
         }
 
-        return IsCommit;
+        return this.IsCommit;
     }
 }

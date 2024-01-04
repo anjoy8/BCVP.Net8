@@ -1,10 +1,13 @@
 ﻿using BCVP.Net8.Model;
+using SqlSugar;
 
 namespace BCVP.Net8.IService
 {
-    public interface IUserService
+    public interface IBaseServices<TEntity, TVo> where TEntity : class
     {
-        Task<List<UserVo>> Query();
+        ISqlSugarClient Db { get; }
 
+        Task<long> Add(TEntity entity);
+        Task<List<TVo>> Query();
     }
 }

@@ -2,6 +2,7 @@
 using BCVP.Net8.IService;
 using BCVP.Net8.Model;
 using BCVP.Net8.Repository;
+using SqlSugar;
 using System.Reflection;
 
 namespace BCVP.Net8.Service
@@ -10,6 +11,7 @@ namespace BCVP.Net8.Service
     {
         private readonly IMapper _mapper;
         private readonly IBaseRepository<TEntity> _baseRepository;
+        public ISqlSugarClient Db => _baseRepository.Db;
 
         public BaseServices(IMapper mapper, IBaseRepository<TEntity> baseRepository)
         {

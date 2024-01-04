@@ -2,6 +2,7 @@
 using Autofac.Extras.DynamicProxy;
 using BCVP.Net8.IService;
 using BCVP.Net8.Repository;
+using BCVP.Net8.Repository.UnitOfWorks;
 using BCVP.Net8.Service;
 using System.Reflection;
 using System.Security.AccessControl;
@@ -23,8 +24,9 @@ namespace BCVP.Net8.Extensions.ServiceExtensions
             var servicesDllFile = Path.Combine(basePath, "BCVP.Net8.Service.dll");
             var repositoryDllFile = Path.Combine(basePath, "BCVP.Net8.Repository.dll");
 
-            var aopTypes = new List<Type>() { typeof(ServiceAOP) };
+            var aopTypes = new List<Type>() { typeof(ServiceAOP), typeof(TranAOP) };
             builder.RegisterType<ServiceAOP>();
+            builder.RegisterType<TranAOP>();
 
             builder.RegisterGeneric(typeof(BaseRepository<>)).As(typeof(IBaseRepository<>))
                 .InstancePerDependency(); //注册仓储
@@ -50,6 +52,10 @@ namespace BCVP.Net8.Extensions.ServiceExtensions
                 .InstancePerDependency();
 
 
+            builder.RegisterType<UnitOfWorkManage>().As<IUnitOfWorkManage>()
+                .AsImplementedInterfaces()
+                .InstancePerLifetimeScope()
+                .PropertiesAutowired();
         }
     }
 }

@@ -4,6 +4,6 @@ namespace BCVP.Net8.Repository
 {
     public interface IUserRepository
     {
-        Task<List<User>> Query();
+        Task<List<SysUserInfo>> Query();
     }
 }
