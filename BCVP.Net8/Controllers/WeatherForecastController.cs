@@ -17,22 +17,25 @@ namespace BCVP.Net8.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        public IBaseServices<Role, RoleVo> _roleServiceObj { get; set; }
+        public IBaseServices<Role, RoleVo>? _roleServiceObj { get; set; }
 
         private readonly ILogger<WeatherForecastController> _logger;
         private readonly IBaseServices<Role, RoleVo> _roleService;
+        private readonly IBaseServices<AuditSqlLog, AuditSqlLogVo> _auditSqllogService;
         private readonly IServiceScopeFactory _scopeFactory;
         private readonly ICaching _caching;
         private readonly IOptions<RedisOptions> _redisOptions;
 
         public WeatherForecastController(ILogger<WeatherForecastController> logger,
             IBaseServices<Role, RoleVo> roleService,
+            IBaseServices<AuditSqlLog, AuditSqlLogVo> auditSqllogService,
             IServiceScopeFactory scopeFactory,
             ICaching caching,
             IOptions<RedisOptions> options)
         {
             _logger = logger;
             _roleService = roleService;
+            _auditSqllogService = auditSqllogService;
             _scopeFactory = scopeFactory;
             _caching = caching;
             _redisOptions = options;
@@ -91,9 +94,10 @@ namespace BCVP.Net8.Controllers
             //await _caching.RemoveAsync(cacheKey);
             //await Console.Out.WriteLineAsync("全部keys -->" + JsonConvert.SerializeObject(await _caching.GetAllCacheKeysAsync()));
 
+            var rltList = await _auditSqllogService.Query();
 
             Console.WriteLine("api request end...");
-            return roleList;
+            return rltList;
         }
     }
 }
