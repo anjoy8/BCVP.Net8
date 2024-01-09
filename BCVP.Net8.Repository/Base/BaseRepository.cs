@@ -3,6 +3,7 @@ using BCVP.Net8.Model;
 using BCVP.Net8.Repository.UnitOfWorks;
 using Newtonsoft.Json;
 using SqlSugar;
+using System.Linq.Expressions;
 using System.Reflection;
 
 namespace BCVP.Net8.Repository
@@ -55,6 +56,33 @@ namespace BCVP.Net8.Repository
         {
             var insert = _db.Insertable(entity);
             return await insert.ExecuteReturnSnowflakeIdAsync();
+        }
+
+        /// <summary>
+        /// 分表查询
+        /// </summary>
+        /// <param name="whereExpression">条件表达式</param>
+        /// <param name="orderByFields">排序字段，如name asc,age desc</param>
+        /// <returns></returns>
+        public async Task<List<TEntity>> QuerySplit(Expression<Func<TEntity, bool>> whereExpression, string orderByFields = null)
+        {
+            return await _db.Queryable<TEntity>()
+                .SplitTable()
+                .OrderByIF(!string.IsNullOrEmpty(orderByFields), orderByFields)
+                .WhereIF(whereExpression != null, whereExpression)
+                .ToListAsync();
+        }
+
+        /// <summary>
+        /// 写入实体数据
+        /// </summary>
+        /// <param name="entity">数据实体</param>
+        /// <returns></returns>
+        public async Task<List<long>> AddSplit(TEntity entity)
+        {
+            var insert = _db.Insertable(entity).SplitTable();
+            //插入并返回雪花ID并且自动赋值ID　
+            return await insert.ExecuteReturnSnowflakeIdListAsync();
         }
     }
 }

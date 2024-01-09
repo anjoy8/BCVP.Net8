@@ -94,7 +94,15 @@ namespace BCVP.Net8.Controllers
             //await _caching.RemoveAsync(cacheKey);
             //await Console.Out.WriteLineAsync("全部keys -->" + JsonConvert.SerializeObject(await _caching.GetAllCacheKeysAsync()));
 
-            var rltList = await _auditSqllogService.Query();
+            TimeSpan timeSpan = DateTime.Now.ToUniversalTime() - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            var id = timeSpan.TotalSeconds.ObjToLong();
+            await _auditSqllogService.AddSplit(new AuditSqlLog()
+            {
+                Id = id,
+                DateTime = Convert.ToDateTime("2023-12-23"),
+            });
+
+            var rltList = await _auditSqllogService.QuerySplit(d => d.DateTime <= Convert.ToDateTime("2023-12-24"));
 
             Console.WriteLine("api request end...");
             return rltList;
