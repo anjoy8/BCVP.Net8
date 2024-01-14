@@ -11,6 +11,9 @@ using BCVP.Net8.Service;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using BCVP.Net8.Common.Core;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace BCVP.Net8
 {
@@ -53,6 +56,22 @@ namespace BCVP.Net8
 
             // ORM
             builder.Services.AddSqlsugarSetup();
+            // JWT
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+
+                        ValidIssuer = "Blog.Core",
+                        ValidAudience = "wr",
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("sdfsdfsrty45634kkhllghtdgdfss345t678fs"))
+                    };
+                });
 
             var app = builder.Build();
             app.ConfigureApplication();

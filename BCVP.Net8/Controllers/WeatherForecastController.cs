@@ -6,6 +6,7 @@ using BCVP.Net8.Common.Option;
 using BCVP.Net8.IService;
 using BCVP.Net8.Model;
 using BCVP.Net8.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Options;
@@ -15,6 +16,7 @@ namespace BCVP.Net8.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize]
     public class WeatherForecastController : ControllerBase
     {
         public IBaseServices<Role, RoleVo>? _roleServiceObj { get; set; }
