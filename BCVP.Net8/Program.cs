@@ -72,6 +72,13 @@ namespace BCVP.Net8
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("sdfsdfsrty45634kkhllghtdgdfss345t678fs"))
                     };
                 });
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Client", policy => policy.RequireClaim("iss", "Blog.Core").Build());
+                options.AddPolicy("SuperAdmin", policy => policy.RequireRole("SuperAdmin").Build());
+                options.AddPolicy("SystemOrAdmin", policy => policy.RequireRole("SuperAdmin", "System"));
+            });
+            builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             var app = builder.Build();
             app.ConfigureApplication();

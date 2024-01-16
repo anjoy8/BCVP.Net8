@@ -16,7 +16,8 @@ namespace BCVP.Net8.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    [Authorize]
+    //[Authorize(Roles = "SuperAdmin")]
+    [Authorize(Policy = "Client")]
     public class WeatherForecastController : ControllerBase
     {
         public IBaseServices<Role, RoleVo>? _roleServiceObj { get; set; }
@@ -26,6 +27,7 @@ namespace BCVP.Net8.Controllers
         private readonly IBaseServices<AuditSqlLog, AuditSqlLogVo> _auditSqllogService;
         private readonly IServiceScopeFactory _scopeFactory;
         private readonly ICaching _caching;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IOptions<RedisOptions> _redisOptions;
 
         public WeatherForecastController(ILogger<WeatherForecastController> logger,
@@ -33,6 +35,7 @@ namespace BCVP.Net8.Controllers
             IBaseServices<AuditSqlLog, AuditSqlLogVo> auditSqllogService,
             IServiceScopeFactory scopeFactory,
             ICaching caching,
+            IHttpContextAccessor httpContextAccessor,
             IOptions<RedisOptions> options)
         {
             _logger = logger;
@@ -40,6 +43,7 @@ namespace BCVP.Net8.Controllers
             _auditSqllogService = auditSqllogService;
             _scopeFactory = scopeFactory;
             _caching = caching;
+            _httpContextAccessor = httpContextAccessor;
             _redisOptions = options;
         }
 
@@ -47,7 +51,11 @@ namespace BCVP.Net8.Controllers
         public async Task<object> Get()
         {
             Console.WriteLine("api request begin...");
-
+            var httpContext = _httpContextAccessor.HttpContext?.User.Claims.ToList();
+            foreach (var item in httpContext)
+            {
+                await Console.Out.WriteLineAsync($"{item.Type} : {item.Value}");
+            }
             //var userService = new UserService();
             //var userList = await userService.Query();
             //return userList;
