@@ -17,7 +17,8 @@ namespace BCVP.Net8.Controllers
     [ApiController]
     [Route("[controller]")]
     //[Authorize(Roles = "SuperAdmin")]
-    [Authorize(Policy = "Client")]
+    //[Authorize(Policy = "Client")]
+    [Authorize("Permission")]
     public class WeatherForecastController : ControllerBase
     {
         public IBaseServices<Role, RoleVo>? _roleServiceObj { get; set; }

@@ -14,6 +14,7 @@ using BCVP.Net8.Common.Core;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BCVP.Net8
 {
@@ -77,7 +78,11 @@ namespace BCVP.Net8
                 options.AddPolicy("Client", policy => policy.RequireClaim("iss", "Blog.Core").Build());
                 options.AddPolicy("SuperAdmin", policy => policy.RequireRole("SuperAdmin").Build());
                 options.AddPolicy("SystemOrAdmin", policy => policy.RequireRole("SuperAdmin", "System"));
+
+                options.AddPolicy("Permission", policy => policy.Requirements.Add(new PermissionRequirement()));
             });
+            builder.Services.AddScoped<IAuthorizationHandler, PermissionRequirement>();
+
             builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             var app = builder.Build();
