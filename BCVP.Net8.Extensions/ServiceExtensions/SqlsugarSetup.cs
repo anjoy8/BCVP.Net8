@@ -59,7 +59,15 @@ namespace BCVP.Net8.Extensions.ServiceExtensions
             // 参考：https://www.donet5.com/Home/Doc?typeId=1181
             services.AddSingleton<ISqlSugarClient>(o =>
             {
-                return new SqlSugarScope(BaseDBConfig.AllConfigs);
+                return new SqlSugarScope(BaseDBConfig.AllConfigs, db =>
+                {
+                    BaseDBConfig.ValidConfig.ForEach(config =>
+                    {
+                        var dbProvider = db.GetConnectionScope((string)config.ConfigId);
+                        // 配置实体数据权限（多租户）
+                        RepositorySetting.SetTenantEntityFilter(dbProvider);
+                    });
+                });
             });
         }
     }

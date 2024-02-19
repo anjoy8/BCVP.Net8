@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BCVP.Net8.Model;
+using BCVP.Net8.Model.Tenants;
 
 namespace BCVP.Net8.Extensions.ServiceExtensions
 {
@@ -23,6 +24,10 @@ namespace BCVP.Net8.Extensions.ServiceExtensions
 
             CreateMap<AuditSqlLog, AuditSqlLogVo>();
             CreateMap<AuditSqlLogVo, AuditSqlLog>();
+
+
+            CreateMap<BusinessTable, BusinessTableVo>();
+            CreateMap<BusinessTableVo, BusinessTable>();
         }
     }
 }

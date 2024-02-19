@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
+using BCVP.Net8.Common.HttpContextUser;
 
 namespace BCVP.Net8
 {
@@ -86,6 +87,8 @@ namespace BCVP.Net8
 
 
             builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            builder.Services.AddScoped<IUser, AspNetUser>();
+
 
             var app = builder.Build();
             app.ConfigureApplication();

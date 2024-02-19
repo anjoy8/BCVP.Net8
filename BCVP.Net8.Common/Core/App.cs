@@ -1,4 +1,5 @@
 ﻿﻿using BCVP.Net8.Common.Extensions;
+using BCVP.Net8.Common.HttpContextUser;
 using BCVP.Net8.Common.Option;
 using BCVP.Net8.Common.Option.Core;
 using Microsoft.AspNetCore.Hosting;
@@ -52,7 +53,7 @@ public class App
     /// </summary>
     public static HttpContext HttpContext => RootServices?.GetService<IHttpContextAccessor>()?.HttpContext;
 
-    //public static IUser User => GetService<IUser>();
+    public static IUser User => GetService<IUser>();
 
     #region Service
 
