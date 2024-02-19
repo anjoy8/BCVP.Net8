@@ -81,7 +81,9 @@ namespace BCVP.Net8
 
                 options.AddPolicy("Permission", policy => policy.Requirements.Add(new PermissionRequirement()));
             });
-            builder.Services.AddScoped<IAuthorizationHandler, PermissionRequirement>();
+            builder.Services.AddScoped<IAuthorizationHandler, PermissionRequirementHandler>();
+            builder.Services.AddSingleton(new PermissionRequirement());
+
 
             builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
