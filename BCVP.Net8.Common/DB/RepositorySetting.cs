@@ -1,4 +1,5 @@
 ﻿using BCVP.Net8.Common.Core;
+using BCVP.Net8.Model;
 using BCVP.Net8.Model.Tenants;
 using SqlSugar;
 
@@ -18,5 +19,17 @@ public class RepositorySetting
 
         //多租户 单表字段
         db.QueryFilter.AddTableFilter<ITenantEntity>(it => it.TenantId == App.User.TenantId || it.TenantId == 0);
+
+        //多租户 多表
+        db.SetTenantTable(App.User.TenantId.ToString());
     }
+
+    private static readonly Lazy<IEnumerable<Type>> AllEntitys = new(() =>
+    {
+        return typeof(RootEntityTkey<>).Assembly
+            .GetTypes()
+            .Where(t => t.IsClass && !t.IsAbstract)
+            .Where(it => it.FullName != null && it.FullName.StartsWith("BCVP.Net8.Model"));
+    });
+    public static IEnumerable<Type> Entitys => AllEntitys.Value;
 }

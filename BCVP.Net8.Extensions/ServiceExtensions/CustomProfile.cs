@@ -25,9 +25,10 @@ namespace BCVP.Net8.Extensions.ServiceExtensions
             CreateMap<AuditSqlLog, AuditSqlLogVo>();
             CreateMap<AuditSqlLogVo, AuditSqlLog>();
 
-
             CreateMap<BusinessTable, BusinessTableVo>();
             CreateMap<BusinessTableVo, BusinessTable>();
+            CreateMap<MultiBusinessTable, MultiBusinessTableVo>();
+            CreateMap<MultiBusinessTableVo, MultiBusinessTable>();
         }
     }
 }
