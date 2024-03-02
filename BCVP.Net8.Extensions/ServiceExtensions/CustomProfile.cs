@@ -29,6 +29,9 @@ namespace BCVP.Net8.Extensions.ServiceExtensions
             CreateMap<BusinessTableVo, BusinessTable>();
             CreateMap<MultiBusinessTable, MultiBusinessTableVo>();
             CreateMap<MultiBusinessTableVo, MultiBusinessTable>();
+
+            CreateMap<SubLibraryBusinessTable, SubLibraryBusinessTableVo>();
+            CreateMap<SubLibraryBusinessTableVo, SubLibraryBusinessTable>();
         }
     }
 }

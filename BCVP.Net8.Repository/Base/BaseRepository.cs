@@ -1,5 +1,7 @@
 ﻿using BCVP.Net8.Common.Core;
+using BCVP.Net8.Common.DB;
 using BCVP.Net8.Model;
+using BCVP.Net8.Model.Tenants;
 using BCVP.Net8.Repository.UnitOfWorks;
 using Newtonsoft.Json;
 using SqlSugar;
@@ -28,6 +30,28 @@ namespace BCVP.Net8.Repository
                     //统一处理 configId 小写
                     db = _dbBase.GetConnectionScope(tenantAttr.configId.ToString().ToLower());
                     return db;
+                }
+
+                //多租户
+                var mta = typeof(TEntity).GetCustomAttribute<MultiTenantAttribute>();
+                if (mta is { TenantType: TenantTypeEnum.Db })
+                {
+                    //获取租户信息 租户信息可以提前缓存下来 
+                    if (App.User is { TenantId: > 0 })
+                    {
+                        //.WithCache()
+                        var tenant = db.Queryable<SysTenant>().Where(s => s.Id == App.User.TenantId).First();
+                        if (tenant != null)
+                        {
+                            var iTenant = db.AsTenant();
+                            if (!iTenant.IsAnyConnection(tenant.ConfigId))
+                            {
+                                iTenant.AddConnection(tenant.GetConnectionConfig());
+                            }
+
+                            return iTenant.GetConnectionScope(tenant.ConfigId);
+                        }
+                    }
                 }
 
                 return db;

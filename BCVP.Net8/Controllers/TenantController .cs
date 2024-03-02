@@ -17,14 +17,17 @@ public class TenantController : ControllerBase
 {
     private readonly IBaseServices<BusinessTable, BusinessTableVo> _bizServices;
     private readonly IBaseServices<MultiBusinessTable, MultiBusinessTableVo> _multiBusinessService;
+    private readonly IBaseServices<SubLibraryBusinessTable, SubLibraryBusinessTableVo> _subLibBusinessService;
     private readonly IUser _user;
 
     public TenantController(IUser user, IBaseServices<BusinessTable, BusinessTableVo> bizServices,
-         IBaseServices<MultiBusinessTable, MultiBusinessTableVo> multiBusinessService)
+         IBaseServices<MultiBusinessTable, MultiBusinessTableVo> multiBusinessService,
+         IBaseServices<SubLibraryBusinessTable, SubLibraryBusinessTableVo> subLibBusinessService)
     {
         _user = user;
         _bizServices = bizServices;
         _multiBusinessService = multiBusinessService;
+        _subLibBusinessService = subLibBusinessService;
     }
 
     /// <summary>
@@ -41,6 +44,11 @@ public class TenantController : ControllerBase
     public async Task<object> MultiBusinessByTable()
     {
         return await _multiBusinessService.Query();
+    }
+    [HttpGet]
+    public async Task<object> SubLibraryBusinessTable()
+    {
+        return await _subLibBusinessService.Query();
     }
 
 }

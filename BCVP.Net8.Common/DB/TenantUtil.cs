@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using BCVP.Net8.Model;
 using BCVP.Net8.Model.Tenants;
 using Blog.Core.Model.Models;
 using SqlSugar;
@@ -52,5 +53,26 @@ public static class TenantUtil
         {
             db.MappingTables.Add(type.Name, type.GetTenantTableName(db, id));
         }
+    }
+
+    public static ConnectionConfig GetConnectionConfig(this SysTenant tenant)
+    {
+        if (tenant.DbType is null)
+        {
+            throw new ArgumentException("Tenant DbType Must");
+        }
+
+        return new ConnectionConfig()
+        {
+            ConfigId = tenant.ConfigId,
+            DbType = tenant.DbType.Value,
+            ConnectionString = tenant.Connection,
+            IsAutoCloseConnection = true,
+            MoreSettings = new ConnMoreSettings()
+            {
+                IsAutoRemoveDataCache = true,
+                SqlServerCodeFirstNvarchar = true,
+            },
+        };
     }
 }
