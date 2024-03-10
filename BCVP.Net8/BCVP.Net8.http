@@ -1,5 +1,5 @@
 @BCVP.Net8_HostAddress = http://localhost:5047
-@BCVP.Net8_Token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYmxvZ2FkbWluIiwianRpIjoiMTIiLCJUZW5hbnRJZCI6IjEwMDAwMDMiLCJpYXQiOiIxNzA5Mzc5NDEwIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9leHBpcmF0aW9uIjoiMDMvMDIvMjAyNCAxMjozNjo1MCIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IlN1cGVyQWRtaW4iLCJuYmYiOjE3MDkzNTA2MTAsImV4cCI6MTcwOTM1NDIxMCwiaXNzIjoiQmxvZy5Db3JlIiwiYXVkIjoid3IifQ.djLk08oiXaQwolZVJ6A0TT-NXElhs2NbI1xUaPonSi8
+@BCVP.Net8_Token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYmxvZ2FkbWluIiwianRpIjoiMTIiLCJUZW5hbnRJZCI6IjEwMDAwMDMiLCJpYXQiOiIxNzEwMDcwNzUzIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9leHBpcmF0aW9uIjoiMDMvMTAvMjAyNCAxMjozOToxMyIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IlN1cGVyQWRtaW4iLCJuYmYiOjE3MTAwNDE5NTMsImV4cCI6MTcxMDA0NTU1MywiaXNzIjoiQmxvZy5Db3JlIiwiYXVkIjoid3IifQ.GueWm1NGf-bjIRYzpd6g9SAPGDwpDfpvBrzAlVPafTQ
 
 GET {{BCVP.Net8_HostAddress}}/weatherforecast/
 Accept: application/json
@@ -32,6 +32,17 @@ Authorization:Bearer {{BCVP.Net8_Token}}
 
 ###
 GET {{BCVP.Net8_HostAddress}}/api/Tenant/SubLibraryBusinessTable
+Accept: application/json
+Authorization:Bearer {{BCVP.Net8_Token}}
+###
+
+###
+GET {{BCVP.Net8_HostAddress}}/api/Tenant/GetTenantCache
+Accept: application/json
+Authorization:Bearer {{BCVP.Net8_Token}}
+###
+###
+GET {{BCVP.Net8_HostAddress}}/api/Tenant/AddTenant
 Accept: application/json
 Authorization:Bearer {{BCVP.Net8_Token}}
 ###

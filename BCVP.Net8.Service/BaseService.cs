@@ -28,6 +28,14 @@ namespace BCVP.Net8.Service
             return llout;
         }
 
+        public async Task<List<TVo>> QueryWithCache(Expression<Func<TEntity, bool>>? whereExpression = null)
+        {
+            var entities = await _baseRepository.QueryWithCache(whereExpression);
+            Console.WriteLine($"_baseRepository 实例HashCode ： {_baseRepository.GetHashCode()}");
+            var llout = _mapper.Map<List<TVo>>(entities);
+            return llout;
+        }
+
         /// <summary>
         /// 写入实体数据
         /// </summary>

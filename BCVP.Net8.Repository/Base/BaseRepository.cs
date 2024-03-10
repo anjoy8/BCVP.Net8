@@ -40,7 +40,7 @@ namespace BCVP.Net8.Repository
                     if (App.User is { TenantId: > 0 })
                     {
                         //.WithCache()
-                        var tenant = db.Queryable<SysTenant>().Where(s => s.Id == App.User.TenantId).First();
+                        var tenant = db.Queryable<SysTenant>().WithCache().Where(s => s.Id == App.User.TenantId).First();
                         if (tenant != null)
                         {
                             var iTenant = db.AsTenant();
@@ -69,6 +69,11 @@ namespace BCVP.Net8.Repository
         {
             await Console.Out.WriteLineAsync(Db.GetHashCode().ToString());
             return await _db.Queryable<TEntity>().WhereIF(whereExpression != null, whereExpression).ToListAsync();
+        }
+
+        public async Task<List<TEntity>> QueryWithCache(Expression<Func<TEntity, bool>> whereExpression = null)
+        {
+            return await _db.Queryable<TEntity>().WhereIF(whereExpression != null, whereExpression).WithCache().ToListAsync();
         }
 
         /// <summary>

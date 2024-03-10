@@ -1,4 +1,6 @@
 ﻿using BCVP.Net8.Common;
+using BCVP.Net8.Common.Caches;
+using BCVP.Net8.Common.Core;
 using BCVP.Net8.Common.DB;
 using Blog.Core.Common.Const;
 using Microsoft.Extensions.Caching.Memory;
@@ -36,6 +38,11 @@ namespace BCVP.Net8.Extensions.ServiceExtensions
                         IsAutoRemoveDataCache = true,
                         SqlServerCodeFirstNvarchar = true,
                     },
+                    // 自定义特性
+                    ConfigureExternalServices = new ConfigureExternalServices()
+                    {
+                        DataInfoCacheService = new SqlSugarCacheService(),
+                    },
                     InitKeyType = InitKeyType.Attribute
                 };
                 if (SqlSugarConst.LogConfigId.ToLower().Equals(m.ConnId.ToLower()))
@@ -66,9 +73,37 @@ namespace BCVP.Net8.Extensions.ServiceExtensions
                         var dbProvider = db.GetConnectionScope((string)config.ConfigId);
                         // 配置实体数据权限（多租户）
                         RepositorySetting.SetTenantEntityFilter(dbProvider);
+
+                        // 打印SQL语句
+                        dbProvider.Aop.OnLogExecuting = (s, parameters) =>
+                        {
+                            SqlSugarAop.OnLogExecuting(dbProvider, App.User?.Name.ObjToString(), ExtractTableName(s),
+                                Enum.GetName(typeof(SugarActionType), dbProvider.SugarActionType), s, parameters,
+                                config);
+                        };
                     });
                 });
             });
         }
+        private static string ExtractTableName(string sql)
+        {
+            // 匹配 SQL 语句中的表名的正则表达式
+            //string regexPattern = @"\s*(?:UPDATE|DELETE\s+FROM|SELECT\s+\*\s+FROM)\s+(\w+)";
+            string regexPattern = @"(?i)(?:FROM|UPDATE|DELETE\s+FROM)\s+`(.+?)`";
+            Regex regex = new Regex(regexPattern, RegexOptions.IgnoreCase);
+            Match match = regex.Match(sql);
+
+            if (match.Success)
+            {
+                // 提取匹配到的表名
+                return match.Groups[1].Value;
+            }
+            else
+            {
+                // 如果没有匹配到表名，则返回空字符串或者抛出异常等处理
+                return string.Empty;
+            }
+        }
+
     }
 }

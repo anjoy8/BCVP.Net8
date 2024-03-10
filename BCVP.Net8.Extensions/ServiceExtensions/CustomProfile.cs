@@ -32,6 +32,9 @@ namespace BCVP.Net8.Extensions.ServiceExtensions
 
             CreateMap<SubLibraryBusinessTable, SubLibraryBusinessTableVo>();
             CreateMap<SubLibraryBusinessTableVo, SubLibraryBusinessTable>();
+
+            CreateMap<SysTenant, SysTenantVo>();
+            CreateMap<SysTenantVo, SysTenant>();
         }
     }
 }
