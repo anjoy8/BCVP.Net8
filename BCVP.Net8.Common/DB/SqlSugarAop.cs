@@ -1,4 +1,6 @@
 ﻿
+using BCVP.Net8.Common.LogHelper;
+using Serilog;
 using SqlSugar;
 
 namespace BCVP.Net8.Common.DB;
@@ -12,7 +14,11 @@ public static class SqlSugarAop
             var logConsole = string.Format($"------------------ \r\n User:[{user}]  Table:[{table}]  Operate:[{operate}] " +
                 $"ConnId:[{config.ConfigId}]【SQL语句】: " +
                 $"\r\n {UtilMethods.GetNativeSql(sql, p)}");
-            Console.WriteLine(logConsole);
+            //Console.WriteLine(logConsole);
+            using (LogContextExtension.Create.SqlAopPushProperty(sqlSugarScopeProvider))
+            {
+                Log.Information(logConsole);
+            }
         }
         catch (Exception e)
         {

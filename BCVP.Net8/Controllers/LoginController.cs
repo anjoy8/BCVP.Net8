@@ -10,6 +10,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using Serilog;
 
 
 namespace BCVP.Net8.Controllers
@@ -53,6 +54,9 @@ namespace BCVP.Net8.Controllers
             string jwtStr = string.Empty;
 
             pass = MD5Encrypt32(pass);
+
+            Log.Information($"自定义日志 -- {name}-{pass}");
+            _logger.LogInformation($"自定义日志 -- {name}-{pass}");
 
             var user = await _userService.Query(d => d.LoginName == name && d.LoginPWD == pass && d.IsDeleted == false);
             if (user.Count > 0)
